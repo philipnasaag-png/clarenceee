@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Acceptance Matters | The Art of Radical Peace</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: {
+                            50: '#FFF1F2',
+                            100: '#FFE4E6',
+                            200: '#FECDD3',
+                            300: '#FDA4AF',
+                            400: '#FB7185',
+                            500: '#F43F5E',
+                            600: '#E11D48',
+                            700: '#BE123C',
+                            800: '#9E1135',
+                            900: '#4C0519',
+                        },
+                        crimson: {
+                            deep: '#800A22',
+                            velvet: '#9B111E',
+                            dark: '#3B020D',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'breathe-expand': 'breathe 14s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(3deg)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 15px rgba(225, 29, 72, 0.2)' },
+                            '50%': { boxShadow: '0 0 35px rgba(225, 29, 72, 0.5)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(255, 241, 242, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(253, 164, 175, 0.4);
+        }
+        .glass-panel-dark {
+            background: rgba(76, 5, 25, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(251, 113, 133, 0.3);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(254, 205, 211, 0.6);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(225, 29, 72, 0.15);
+            border-color: rgba(244, 63, 94, 0.5);
+        }
+
+        /* Subtle Petal Background Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF1F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FDA4AF;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E11D48;
+        }
+
+        /* Floating Animation Helper */
+        .heart-burst {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUpFade 1.2s ease-out forwards;
+        }
+        @keyframes floatUpFade {
+            0% { opacity: 1; transform: translateY(0) scale(0.8); }
+            50% { opacity: 0.9; transform: translateY(-35px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-70px) scale(1); }
+        }
+
+        /* Custom Toggle Slider Styling */
+        .toggle-switch-bg {
+            transition: background-color 0.5s ease, border-color 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-[#FFF5F6] text-blush-900 font-sans relative overflow-x-hidden selection:bg-blush-200 selection:text-blush-900">
+
+    <!-- Animated Petal Canvas Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Reading Progress Bar -->
+    <div id="progress-bar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-blush-300 via-blush-500 to-blush-700 z-50 transition-all duration-150 w-0"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 glass-panel border-b border-blush-200/60 px-4 md:px-8 py-3.5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <span class="w-8 h-8 rounded-full bg-gradient-to-tr from-blush-600 to-blush-400 flex items-center justify-center text-white text-sm shadow-md shadow-blush-500/20 group-hover:scale-105 transition-transform">
+                    ♥
+                </span>
+                <span class="font-serif text-2xl font-bold tracking-tight text-blush-900">
+                    The Art of Acceptance
+                </span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-blush-800">
+                <a href="#perspective" class="hover:text-blush-600 transition-colors">Shift Perspective</a>
+                <a href="#pillars" class="hover:text-blush-600 transition-colors">Four Pillars</a>
+                <a href="#reframer" class="hover:text-blush-600 transition-colors">Thought Reframer</a>
+                <a href="#breathing" class="hover:text-blush-600 transition-colors">60s Pause</a>
+                <a href="#wall" class="hover:text-blush-600 transition-colors">Acceptance Wall</a>
+            </div>
+
+            <!-- Header Action Button -->
+            <a href="#breathing" class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-blush-600 to-blush-500 hover:from-blush-700 hover:to-blush-600 shadow-md shadow-blush-600/20 transition-all hover:shadow-lg hover:shadow-blush-600/30">
+                Take a Breath
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-blush-900 p-2 focus:outline-none" aria-label="Toggle Navigation Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden pt-4 pb-3 px-2 border-t border-blush-200/40 mt-3 space-y-2 text-sm font-medium">
+            <a href="#perspective" class="block px-3 py-2 rounded-lg hover:bg-blush-100/80 transition-colors">Shift Perspective</a>
+            <a href="#pillars" class="block px-3 py-2 rounded-lg hover:bg-blush-100/80 transition-colors">Four Pillars</a>
+            <a href="#reframer" class="block px-3 py-2 rounded-lg hover:bg-blush-100/80 transition-colors">Thought Reframer</a>
+            <a href="#breathing" class="block px-3 py-2 rounded-lg hover:bg-blush-100/80 transition-colors">60s Pause</a>
+            <a href="#wall" class="block px-3 py-2 rounded-lg hover:bg-blush-100/80 transition-colors">Acceptance Wall</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 space-y-24 py-12">
+
+        <!-- HERO SECTION -->
+        <section class="text-center space-y-8 pt-4 md:pt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blush-100 border border-blush-300 text-blush-700 text-xs font-semibold tracking-wide uppercase shadow-sm animate-pulse-glow">
+                <span>❀</span> Psychological Well-Being & Inner Freedom
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-blush-900 leading-[1.15] max-w-4xl mx-auto">
+                Acceptance isn't surrender. <br class="hidden sm:inline"/>
+                <span class="italic font-normal bg-clip-text text-transparent bg-gradient-to-r from-blush-600 via-blush-500 to-crimson-velvet">
+                    It's the beginning of liberation.
+                </span>
+            </h1>
+
+            <p class="text-base sm:text-lg md:text-xl text-blush-800 max-w-2xl mx-auto font-light leading-relaxed">
+                When we stop fighting reality, we unlock the emotional bandwidth to heal, grow, and respond with wisdom. Discover how unconditional acceptance transforms our mind and relationships.
+            </p>
+
+            <!-- Quick Pill Selector ("Where Are You Right Now?") -->
+            <div class="pt-6 space-y-4 max-w-3xl mx-auto">
+                <p class="text-xs font-bold uppercase tracking-widest text-blush-600">Where are you seeking acceptance today?</p>
+                
+                <div class="flex flex-wrap justify-center gap-2 sm:gap-3" id="mood-pills-container">
+                    <button data-pill="self" class="mood-pill active px-4 py-2 rounded-full text-sm font-medium transition-all bg-blush-600 text-white shadow-md shadow-blush-600/30 scale-105">
+                        ✨ Self-Acceptance
+                    </button>
+                    <button data-pill="others" class="mood-pill px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-blush-800 border border-blush-200 hover:border-blush-400">
+                        🤝 Accepting Others
+                    </button>
+                    <button data-pill="change" class="mood-pill px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-blush-800 border border-blush-200 hover:border-blush-400">
+                        🌊 Navigating Change & Loss
+                    </button>
+                    <button data-pill="perfection" class="mood-pill px-4 py-2 rounded-full text-sm font-medium transition-all bg-white text-blush-800 border border-blush-200 hover:border-blush-400">
+                        🍃 Releasing Perfectionism
+                    </button>
+                </div>
+
+                <!-- Dynamic Pill Card Content -->
+                <div id="pill-content-card" class="glass-card p-6 rounded-2xl text-left max-w-2xl mx-auto border border-blush-300 shadow-xl transition-all duration-300">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl p-3 bg-blush-100 rounded-xl text-blush-600 shrink-0" id="pill-icon">✨</div>
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-2xl font-bold text-blush-900" id="pill-title">Making Peace With Who You Are</h3>
+                            <p class="text-blush-800 text-sm leading-relaxed" id="pill-desc">
+                                Self-acceptance means embracing all aspects of yourself—your strengths, flaws, past mistakes, and complex feelings—without harsh judgment. It is not self-satisfaction, but the foundation for real growth.
+                            </p>
+                            <div class="pt-2 flex items-center text-xs font-semibold text-blush-600 gap-1.5" id="pill-action">
+                                💡 <span>Daily Insight: Carl Rogers noted, "The curious paradox is that when I accept myself just as I am, then I can change."</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: PERSPECTIVE TOGGLE (RESISTANCE VS ACCEPTANCE) -->
+        <section id="perspective" class="space-y-8 scroll-mt-24">
+            <div class="text-center space-y-3">
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-blush-900">The Mindset Shift</h2>
+                <p class="text-blush-700 text-sm sm:text-base max-w-xl mx-auto">
+                    Compare how our brain and body experience suffering when we resist reality versus when we practice acceptance.
+                </p>
+            </div>
+
+            <!-- Toggle Container -->
+            <div class="max-w-4xl mx-auto glass-panel p-6 sm:p-8 rounded-3xl border border-blush-300 shadow-2xl transition-all duration-700" id="toggle-container">
+                
+                <div class="flex items-center justify-center gap-4 mb-8">
+                    <span id="label-resistance" class="font-bold text-sm sm:text-base text-gray-500 transition-colors">Resistance Mindset</span>
+                    <button id="state-toggle-btn" class="w-16 h-9 rounded-full bg-slate-300 p-1 transition-colors duration-300 relative focus:outline-none" aria-label="Toggle Perspective">
+                        <div id="toggle-circle" class="w-7 h-7 rounded-full bg-white shadow-md transform transition-transform duration-300 translate-x-0"></div>
+                    </button>
+                    <span id="label-acceptance" class="font-bold text-sm sm:text-base text-blush-600 transition-colors">Acceptance Mindset</span>
+                </div>
+
+                <!-- Dynamic Comparison Display -->
+                <div class="grid md:grid-cols-2 gap-6 items-stretch">
+                    <!-- Left Column: The Inner Experience -->
+                    <div id="perspective-left-card" class="bg-white/90 p-6 rounded-2xl border border-slate-200 transition-all duration-500">
+                        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 mb-3" id="state-badge">
+                            <span>⚡ Focus Mode: Active Resistance</span>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-800 mb-2" id="state-headline">
+                            "This shouldn't be happening to me."
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4" id="state-body">
+                            Resistance tries to fight what has already occurred. It loops thoughts in regret, denial, and frustration—expending immense internal energy against reality.
+                        </p>
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1" id="state-biology">
+                            <span class="font-bold block text-slate-800">Physiological Impact:</span>
+                            <span id="state-bio-text">Elevated cortisol, chronic muscle tension, hypervigilance, and prolonged emotional distress.</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Emotional Outcome & Equation -->
+                    <div id="perspective-right-card" class="bg-slate-900 text-white p-6 rounded-2xl flex flex-col justify-between transition-all duration-500">
+                        <div>
+                            <div class="text-xs font-bold uppercase tracking-wider text-rose-300 mb-3">Psychological Equation</div>
+                            <div class="font-serif text-3xl font-bold mb-3 text-rose-100" id="state-formula">
+                                Pain × Resistance = Suffering
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed" id="state-formula-desc">
+                                Pain is inevitable in life, but suffering is created when we struggle against the reality of pain.
+                            </p>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between text-xs text-rose-200">
+                            <span>Key Action:</span>
+                            <span class="font-semibold underline" id="state-quote">Clinging to control</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE FOUR PILLARS OF ACCEPTANCE -->
+        <section id="pillars" class="space-y-10 scroll-mt-24">
+            <div class="text-center space-y-3">
+                <div class="text-xs font-bold uppercase tracking-widest text-blush-600">Core Foundations</div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-blush-900">The Four Pillars of Acceptance</h2>
+                <p class="text-blush-800 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Explore the multifaceted dimensions of acceptance and how each contributes to emotional resilience and personal clarity.
+                </p>
+            </div>
+
+            <!-- Pillars Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Pillar 1 -->
+                <div class="pillar-card glass-card p-6 rounded-3xl flex flex-col justify-between cursor-pointer border border-blush-200 group" data-pillar="1">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blush-100 border border-blush-200 flex items-center justify-center text-2xl text-blush-600 group-hover:bg-blush-600 group-hover:text-white transition-colors">
+                            🌸
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-blush-900">Self-Acceptance</h3>
+                        <p class="text-blush-800 text-sm font-light leading-relaxed">
+                            Befriending your inner self—embracing your imperfections, shadow traits, and unique history without self-condemnation.
+                        </p>
+                    </div>
+                    <div class="pt-6 flex items-center text-xs font-bold text-blush-600 group-hover:translate-x-1 transition-transform">
+                        Explore Pillar <span class="ml-1">→</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="pillar-card glass-card p-6 rounded-3xl flex flex-col justify-between cursor-pointer border border-blush-200 group" data-pillar="2">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blush-100 border border-blush-200 flex items-center justify-center text-2xl text-blush-600 group-hover:bg-blush-600 group-hover:text-white transition-colors">
+                            ⚡
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-blush-900">Radical Acceptance</h3>
+                        <p class="text-blush-800 text-sm font-light leading-relaxed">
+                            Completely accepting reality as it is in the present moment, without attempting to fight or deny facts you cannot change.
+                        </p>
+                    </div>
+                    <div class="pt-6 flex items-center text-xs font-bold text-blush-600 group-hover:translate-x-1 transition-transform">
+                        Explore Pillar <span class="ml-1">→</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="pillar-card glass-card p-6 rounded-3xl flex flex-col justify-between cursor-pointer border border-blush-200 group" data-pillar="3">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blush-100 border border-blush-200 flex items-center justify-center text-2xl text-blush-600 group-hover:bg-blush-600 group-hover:text-white transition-colors">
+                            🕊️
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-blush-900">Interpersonal Acceptance</h3>
+                        <p class="text-blush-800 text-sm font-light leading-relaxed">
+                            Allowing others the freedom to be who they are, letting go of the demand that they change to fit our expectations.
+                        </p>
+                    </div>
+                    <div class="pt-6 flex items-center text-xs font-bold text-blush-600 group-hover:translate-x-1 transition-transform">
+                        Explore Pillar <span class="ml-1">→</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="pillar-card glass-card p-6 rounded-3xl flex flex-col justify-between cursor-pointer border border-blush-200 group" data-pillar="4">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blush-100 border border-blush-200 flex items-center justify-center text-2xl text-blush-600 group-hover:bg-blush-600 group-hover:text-white transition-colors">
+                            🌱
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-blush-900">Constructive Growth</h3>
+                        <p class="text-blush-800 text-sm font-light leading-relaxed">
+                            Recognizing that true change and meaningful evolution can only begin once we clearly acknowledge where we actually stand.
+                        </p>
+                    </div>
+                    <div class="pt-6 flex items-center text-xs font-bold text-blush-600 group-hover:translate-x-1 transition-transform">
+                        Explore Pillar <span class="ml-1">→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar Detail Modal Container -->
+            <div id="pillar-modal" class="hidden glass-panel p-6 sm:p-8 rounded-3xl border border-blush-300 shadow-2xl relative animate-fadeIn">
+                <button id="close-pillar-modal" class="absolute top-4 right-4 text-blush-500 hover:text-blush-900 text-xl font-bold w-8 h-8 rounded-full bg-blush-100 flex items-center justify-center">
+                    ✕
+                </button>
+                <div class="max-w-3xl space-y-4" id="pillar-modal-content">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: REFRAME THE THOUGHT SIMULATOR -->
+        <section id="reframer" class="space-y-8 scroll-mt-24">
+            <div class="text-center space-y-3">
+                <div class="text-xs font-bold uppercase tracking-widest text-blush-600">Interactive Cognitive Exercise</div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-blush-900">Thought Reframing Simulator</h2>
+                <p class="text-blush-800 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Transform self-critical, resistant inner dialogues into compassionate, realistic statements of acceptance.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto glass-panel p-6 sm:p-10 rounded-3xl border border-blush-300 shadow-xl space-y-6">
+                
+                <!-- Quick Preset Selector -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-blush-700">Choose a Common Resistant Thought:</label>
+                    <div class="grid sm:grid-cols-2 gap-2" id="thought-presets">
+                        <button data-thought="I should be much further along in my life by now." class="preset-btn text-left p-3 text-xs sm:text-sm rounded-xl bg-white/80 border border-blush-200 hover:border-blush-400 text-blush-900 transition-colors">
+                            "I should be further along by now."
+                        </button>
+                        <button data-thought="I cannot stand how unfair this situation is." class="preset-btn text-left p-3 text-xs sm:text-sm rounded-xl bg-white/80 border border-blush-200 hover:border-blush-400 text-blush-900 transition-colors">
+                            "I cannot stand how unfair this is."
+                        </button>
+                        <button data-thought="I made a terrible mistake and ruined everything." class="preset-btn text-left p-3 text-xs sm:text-sm rounded-xl bg-white/80 border border-blush-200 hover:border-blush-400 text-blush-900 transition-colors">
+                            "I made a mistake and ruined everything."
+                        </button>
+                        <button data-thought="Why can't people just act the way they ought to?" class="preset-btn text-left p-3 text-xs sm:text-sm rounded-xl bg-white/80 border border-blush-200 hover:border-blush-400 text-blush-900 transition-colors">
+                            "Why can't people just act as they should?"
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Thought Input -->
+                <div class="space-y-2">
+                    <label for="custom-thought" class="block text-xs font-bold uppercase tracking-wider text-blush-700">Or Type Your Own Thought:</label>
+                    <textarea id="custom-thought" rows="2" class="w-full p-4 rounded-xl border border-blush-300 bg-white/90 text-blush-900 text-sm focus:outline-none focus:ring-2 focus:ring-blush-500 placeholder-blush-300 resize-none" placeholder="e.g., I'm frustrated that I'm feeling anxious again today..."></textarea>
+                </div>
+
+                <!-- Transform Button -->
+                <button id="transform-btn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-blush-600 via-blush-500 to-crimson-velvet text-white font-semibold text-sm shadow-lg shadow-blush-600/30 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                    <span>✨ Transform with Acceptance</span>
+                </button>
+
+                <!-- Result Box -->
+                <div id="reframe-result" class="hidden pt-4 space-y-4 border-t border-blush-200/60 animate-fadeIn">
+                    <div class="p-5 rounded-2xl bg-gradient-to-br from-blush-100 to-blush-50 border border-blush-300 space-y-3">
+                        <div class="flex items-center gap-2 text-xs font-bold text-blush-600 uppercase tracking-widest">
+                            <span>🌱 Reframed Acceptance Lens</span>
+                        </div>
+                        <p id="reframed-text" class="font-serif text-xl sm:text-2xl text-blush-900 font-semibold italic">
+                            <!-- Injected JS -->
+                        </p>
+                        <div class="pt-2 text-xs text-blush-700 space-y-1">
+                            <span class="font-bold text-blush-800">Why this works:</span>
+                            <p id="reframed-explanation" class="leading-relaxed">
+                                <!-- Injected JS -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: GUIDED 60-SECOND BREATHING & LETTING GO WIDGET -->
+        <section id="breathing" class="space-y-8 scroll-mt-24">
+            <div class="text-center space-y-3">
+                <div class="text-xs font-bold uppercase tracking-widest text-blush-600">Somatic Reset</div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-blush-900">60-Second Breathing Pause</h2>
+                <p class="text-blush-800 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Acceptance is not just a cognitive choice; it's a bodily release. Slow down and breathe through whatever you are holding.
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto glass-panel-dark text-white p-8 sm:p-12 rounded-3xl shadow-2xl text-center space-y-8 border border-blush-500/30 relative overflow-hidden">
+                
+                <!-- Background Ambient Glow -->
+                <div class="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-blush-600/20 blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-64 h-64 rounded-full bg-crimson-velvet/30 blur-3xl pointer-events-none"></div>
+
+                <!-- Breathing Sphere Graphic -->
+                <div class="relative w-44 h-44 sm:w-56 sm:h-56 mx-auto flex items-center justify-center">
+                    <!-- Outer Glowing Ripple Rings -->
+                    <div id="breath-ring" class="absolute inset-0 rounded-full border-2 border-blush-400/30 transition-all duration-1000 scale-90"></div>
+                    <div id="breath-ring-outer" class="absolute inset-0 rounded-full border border-blush-300/20 transition-all duration-1000 scale-75"></div>
+                    
+                    <!-- Core Animated Sphere -->
+                    <div id="breath-sphere" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-tr from-blush-600 via-blush-500 to-blush-300 shadow-2xl shadow-blush-500/50 flex flex-col items-center justify-center transition-all duration-[4000ms] ease-in-out transform scale-90">
+                        <span id="breath-timer" class="font-serif text-3xl sm:text-4xl font-bold">60</span>
+                        <span id="breath-label" class="text-xs uppercase tracking-widest text-blush-100 font-semibold mt-1">Ready</span>
+                    </div>
+                </div>
+
+                <!-- Breathing Affirmation Text -->
+                <div class="space-y-2 min-h-[60px] flex flex-col justify-center">
+                    <p id="breath-prompt" class="font-serif text-xl sm:text-2xl text-blush-100 italic">
+                        "Press start to begin your 60-second release."
+                    </p>
+                    <p id="breath-subprompt" class="text-xs text-blush-300">
+                        Inhale: Acknowledge • Hold: Soften • Exhale: Release
+                    </p>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center items-center gap-4">
+                    <button id="start-breath-btn" class="px-8 py-3 rounded-full bg-gradient-to-r from-blush-500 to-blush-700 text-white font-semibold text-sm shadow-lg shadow-blush-600/40 hover:scale-105 transition-transform">
+                        Begin Session
+                    </button>
+                    <button id="reset-breath-btn" class="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-blush-200 text-sm font-medium transition-colors">
+                        Reset
+                    </button>
+                </div>
+
+                <!-- Stats / Cycle Count -->
+                <div class="pt-4 border-t border-white/10 text-xs text-blush-300 flex justify-around">
+                    <span>Target Rhythm: 4s-4s-6s</span>
+                    <span>Completed Cycles: <strong id="completed-cycles" class="text-white">0</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: INTERACTIVE WALL OF ACCEPTANCE -->
+        <section id="wall" class="space-y-8 scroll-mt-24">
+            <div class="text-center space-y-3">
+                <div class="text-xs font-bold uppercase tracking-widest text-blush-600">Shared Humanity</div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-blush-900">The Wall of Acceptance</h2>
+                <p class="text-blush-800 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Read reflections from others or contribute your own anonymous pledge of self-compassion and acceptance.
+                </p>
+            </div>
+
+            <!-- Form & Cards Container -->
+            <div class="space-y-10">
+                
+                <!-- Submission Form Box -->
+                <div class="max-w-2xl mx-auto glass-panel p-6 sm:p-8 rounded-3xl border border-blush-300 shadow-lg space-y-4">
+                    <h3 class="font-serif text-2xl font-bold text-blush-900">Post a Note of Acceptance</h3>
+                    
+                    <form id="acceptance-form" class="space-y-4">
+                        <div>
+                            <textarea id="note-text" required rows="3" class="w-full p-4 rounded-xl border border-blush-300 bg-white/90 text-blush-900 text-sm focus:outline-none focus:ring-2 focus:ring-blush-500 placeholder-blush-300 resize-none" placeholder="What are you choosing to accept today? (e.g., 'I accept that I cannot control the future, and that is okay.')"></textarea>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-blush-700 mb-1">Your Name or Alias:</label>
+                                <input type="text" id="note-author" required class="w-full p-3 rounded-xl border border-blush-300 bg-white/90 text-blush-900 text-sm focus:outline-none focus:ring-2 focus:ring-blush-500" placeholder="e.g., Seeking Peace, Alex M.">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-blush-700 mb-1">Card Style:</label>
+                                <select id="note-color" class="w-full p-3 rounded-xl border border-blush-300 bg-white/90 text-blush-900 text-sm focus:outline-none focus:ring-2 focus:ring-blush-500">
+                                    <option value="blush">Blush Rose (Soft Pink)</option>
+                                    <option value="coral">Coral Silk (Warm Rose)</option>
+                                    <option value="crimson">Crimson Velvet (Deep Red)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 px-6 rounded-xl bg-blush-600 hover:bg-blush-700 text-white text-sm font-semibold shadow-md shadow-blush-600/20 transition-all flex items-center justify-center gap-2">
+                            <span>📌 Post Note to Wall</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Sticky Cards Grid -->
+                <div id="wall-cards-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Cards rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: DAILY AFFIRMATION & CLOSING REFLECTION -->
+        <section class="glass-panel p-8 sm:p-12 rounded-3xl text-center space-y-6 border border-blush-300 shadow-xl max-w-4xl mx-auto">
+            <span class="text-3xl">🕊️</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-blush-900">
+                "Acceptance is the quiet space where healing begins."
+            </h2>
+            <p id="random-affirmation-text" class="text-base sm:text-lg text-blush-800 max-w-2xl mx-auto font-light leading-relaxed italic">
+                "I give myself permission to be a work in progress. I accept where I am right now as the necessary starting line for where I am going."
+            </p>
+            <button id="new-affirmation-btn" class="px-6 py-2.5 rounded-full border border-blush-400 text-blush-700 hover:bg-blush-600 hover:text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-sm">
+                ↻ Inspire Me With Another Wisdom
+            </button>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-20 border-t border-blush-200/80 bg-blush-100/60 py-10 text-center text-xs text-blush-700 space-y-3">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2 font-serif text-lg font-bold text-blush-900">
+                <span class="text-blush-600">♥</span> Acceptance Matters
+            </div>
+            <p class="font-light">
+                Designed for emotional balance, self-compassion, and mental clarity.
+            </p>
+            <a href="#" class="text-blush-600 hover:underline font-semibold">Back to Top ↑</a>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* ==========================================================================
+           1. PARTICLES CANVAS (FLOATING PINK & CRIMSON PETALS)
+           ========================================================================== */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height + canvas.height;
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 0.8 + 0.3;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.opacity = Math.random() * 0.4 + 0.2;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 1 - 0.5;
+                // Shades of pink and crimson
+                const colors = ['#FDA4AF', '#FB7185', '#F43F5E', '#FFE4E6'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += Math.sin(this.y * 0.01) * 0.5 + this.speedX;
+                this.rotation += this.rotationSpeed;
+                if (this.y < -20) {
+                    this.reset();
+                    this.y = canvas.height + 10;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                // Draw petal shape
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.5);
+                ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth / 30), 40);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Petal());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        /* ==========================================================================
+           2. SCROLL PROGRESS BAR & NAV BAR TOGGLE
+           ========================================================================== */
+        const progressBar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        // Mobile Nav Drawer Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+
+        /* ==========================================================================
+           3. HERO PILL SELECTOR ("WHERE ARE YOU RIGHT NOW?")
+           ========================================================================== */
+        const moodData = {
+            self: {
+                icon: "✨",
+                title: "Making Peace With Who You Are",
+                desc: "Self-acceptance means embracing all aspects of yourself—your strengths, flaws, past mistakes, and complex feelings—without harsh judgment. It is not self-satisfaction, but the foundation for real growth.",
+                action: "💡 Daily Insight: Carl Rogers noted, 'The curious paradox is that when I accept myself just as I am, then I can change.'"
+            },
+            others: {
+                icon: "🤝",
+                title: "Releasing Control of Other People",
+                desc: "We waste immense energy attempting to fix, change, or control how others act. Accepting others means honoring their autonomy and recognizing that their journey is theirs to navigate.",
+                action: "💡 Daily Insight: You can love someone deeply while completely relinquishing the need to manage their choices."
+            },
+            change: {
+                icon: "🌊",
+                title: "Surrendering to Life's Impermanence",
+                desc: "Loss and unexpected life shifts cause immense grief. Accepting change isn't liking what happened, but stopping the exhausting argument with reality so you can rebuild.",
+                action: "💡 Daily Insight: 'We cannot redirect the wind, but we can adjust our sails.'"
+            },
+            perfection: {
+                icon: "🍃",
+                title: "Disarming the Inner Critic",
+                desc: "Perfectionism is a defense mechanism built on the fear of judgment. Accepting your humanity frees you to make mistakes, learn naturally, and live authentically.",
+                action: "💡 Daily Insight: Replace 'I must be perfect' with 'I am learning, growing, and worthy right now.'"
+            }
+        };
+
+        const pillButtons = document.querySelectorAll('.mood-pill');
+        const pillIcon = document.getElementById('pill-icon');
+        const pillTitle = document.getElementById('pill-title');
+        const pillDesc = document.getElementById('pill-desc');
+        const pillAction = document.getElementById('pill-action');
+
+        pillButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                pillButtons.forEach(b => {
+                    b.classList.remove('bg-blush-600', 'text-white', 'shadow-md', 'scale-105');
+                    b.classList.add('bg-white', 'text-blush-800', 'border', 'border-blush-200');
+                });
+
+                btn.classList.remove('bg-white', 'text-blush-800', 'border', 'border-blush-200');
+                btn.classList.add('bg-blush-600', 'text-white', 'shadow-md', 'scale-105');
+
+                const pillKey = btn.getAttribute('data-pill');
+                const data = moodData[pillKey];
+
+                pillIcon.textContent = data.icon;
+                pillTitle.textContent = data.title;
+                pillDesc.textContent = data.desc;
+                pillAction.innerHTML = data.action;
+            });
+        });
+
+
+        /* ==========================================================================
+           4. PERSPECTIVE TOGGLE (RESISTANCE VS ACCEPTANCE)
+           ========================================================================== */
+        let isAcceptanceState = false;
+        const toggleBtn = document.getElementById('state-toggle-btn');
+        const toggleCircle = document.getElementById('toggle-circle');
+        const toggleContainer = document.getElementById('toggle-container');
+        
+        const labelResistance = document.getElementById('label-resistance');
+        const labelAcceptance = document.getElementById('label-acceptance');
+        
+        const stateBadge = document.getElementById('state-badge');
+        const stateHeadline = document.getElementById('state-headline');
+        const stateBody = document.getElementById('state-body');
+        const stateBioText = document.getElementById('state-bio-text');
+        const stateFormula = document.getElementById('state-formula');
+        const stateFormulaDesc = document.getElementById('state-formula-desc');
+        const stateQuote = document.getElementById('state-quote');
+        const perspectiveLeftCard = document.getElementById('perspective-left-card');
+
+        toggleBtn.addEventListener('click', () => {
+            isAcceptanceState = !isAcceptanceState;
+
+            if (isAcceptanceState) {
+                // Switch to Acceptance
+                toggleBtn.classList.remove('bg-slate-300');
+                toggleBtn.classList.add('bg-blush-600');
+                toggleCircle.classList.add('translate-x-7');
+
+                labelResistance.classList.remove('text-slate-800', 'font-bold');
+                labelResistance.classList.add('text-slate-400');
+                labelAcceptance.classList.remove('text-slate-400');
+                labelAcceptance.classList.add('text-blush-700', 'font-bold');
+
+                stateBadge.innerHTML = '<span>🌸 Focus Mode: Active Acceptance</span>';
+                stateBadge.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blush-600 mb-3';
+
+                stateHeadline.textContent = '"This is what is happening right now. How can I respond with wisdom?"';
+                stateBody.textContent = 'Acceptance acknowledges reality clearly without sugarcoating or panicking. It channels energy toward creative problem-solving and emotional healing.';
+                stateBioText.textContent = 'Decreased amygdala reactivity, lower blood pressure, oxytocin release, and restored clarity.';
+
+                stateFormula.textContent = 'Pain + Acceptance = Healing';
+                stateFormulaDesc.textContent = 'Pain passes naturally through the body when we do not multiply it with emotional resistance or struggle.';
+                stateQuote.textContent = 'Embracing agency & peace';
+
+                perspectiveLeftCard.className = 'bg-blush-50/90 p-6 rounded-2xl border border-blush-300 transition-all duration-500';
+            } else {
+                // Switch back to Resistance
+                toggleBtn.classList.remove('bg-blush-600');
+                toggleBtn.classList.add('bg-slate-300');
+                toggleCircle.classList.remove('translate-x-7');
+
+                labelResistance.classList.add('text-slate-800', 'font-bold');
+                labelAcceptance.classList.remove('text-blush-700', 'font-bold');
+                labelAcceptance.classList.add('text-slate-400');
+
+                stateBadge.innerHTML = '<span>⚡ Focus Mode: Active Resistance</span>';
+                stateBadge.className = 'flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 mb-3';
+
+                stateHeadline.textContent = '"This shouldn\'t be happening to me."';
+                stateBody.textContent = 'Resistance tries to fight what has already occurred. It loops thoughts in regret, denial, and frustration—expending immense internal energy against reality.';
+                stateBioText.textContent = 'Elevated cortisol, chronic muscle tension, hypervigilance, and prolonged emotional distress.';
+
+                stateFormula.textContent = 'Pain × Resistance = Suffering';
+                stateFormulaDesc.textContent = 'Pain is inevitable in life, but suffering is created when we struggle against the reality of pain.';
+                stateQuote.textContent = 'Clinging to control';
+
+                perspectiveLeftCard.className = 'bg-white/90 p-6 rounded-2xl border border-slate-200 transition-all duration-500';
+            }
+        });
+
+
+        /* ==========================================================================
+           5. FOUR PILLARS MODAL EXPANSION
+           ========================================================================== */
+        const pillarData = {
+            1: {
+                title: "Pillar 1: Self-Acceptance & Inner Peace",
+                subtitle: "Ending the internal war with who you are.",
+                content: "Self-acceptance is the unreserved approval and appreciation of your whole self. It means acknowledging your achievements without arrogance and admitting your flaws without self-hatred.",
+                psychKey: "Psychological Key: Self-Compassion vs. Self-Esteem. Self-esteem depends on evaluation and success; self-acceptance is unconditional.",
+                practice: "Daily Practice: Notice when your inner critic speaks. Respond with the supportive words you would offer a dear friend."
+            },
+            2: {
+                title: "Pillar 2: Radical Acceptance of Reality",
+                subtitle: "Stopping the fight against what already is.",
+                content: "Radical Acceptance is a concept from Dialectical Behavior Therapy (DBT). It means accepting reality completely, without judging it, fighting it, or wishing it were different.",
+                psychKey: "Psychological Key: Refusing to accept reality doesn't change reality—it only keeps you trapped in pain.",
+                practice: "Daily Practice: When facing an unchangeable setback, say out loud: 'This is the current reality. Now, what is my wisest next step?'"
+            },
+            3: {
+                title: "Pillar 3: Interpersonal & Inclusive Acceptance",
+                subtitle: "Allowing others space to be human.",
+                content: "Interpersonal acceptance involves respecting individual differences and recognizing that everyone carries unique experiences, vulnerabilities, and perspectives.",
+                psychKey: "Psychological Key: Lowering unrealistic expectations of others reduces chronic disappointment and deepens connection.",
+                practice: "Daily Practice: When frustrated with someone, ask: 'What unspoken expectation am I placing on them right now?'"
+            },
+            4: {
+                title: "Pillar 4: Growth Through Unconditional Acceptance",
+                subtitle: "The paradoxical foundation for change.",
+                content: "Many fear that acceptance leads to complacency. In truth, true growth is impossible without acceptance because you cannot change what you refuse to look at honestly.",
+                psychKey: "Psychological Key: Neuroplasticity thrives in safety, not in harsh self-judgment.",
+                practice: "Daily Practice: Take a clear inventory of your current habits without shame, using it as a neutral roadmap."
+            }
+        };
+
+        const pillarCards = document.querySelectorAll('.pillar-card');
+        const pillarModal = document.getElementById('pillar-modal');
+        const pillarModalContent = document.getElementById('pillar-modal-content');
+        const closeModalBtn = document.getElementById('close-pillar-modal');
+
+        pillarCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.getAttribute('data-pillar');
+                const data = pillarData[id];
+
+                pillarModalContent.innerHTML = `
+                    <h3 class="font-serif text-3xl font-bold text-blush-900">${data.title}</h3>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-blush-600">${data.subtitle}</p>
+                    <p class="text-blush-800 text-sm leading-relaxed pt-2">${data.content}</p>
+                    <div class="p-4 rounded-xl bg-blush-100/70 border border-blush-300 text-xs text-blush-900 space-y-1">
+                        <strong class="block text-blush-900">${data.psychKey}</strong>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white/80 border border-blush-200 text-xs text-blush-800">
+                        <span>🌱 <strong>Practice:</strong> ${data.practice}</span>
+                    </div>
+                `;
+
+                pillarModal.classList.remove('hidden');
+                pillarModal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            pillarModal.classList.add('hidden');
+        });
+
+
+        /* ==========================================================================
+           6. THOUGHT REFRAMER SIMULATOR
+           ========================================================================== */
+        const presetButtons = document.querySelectorAll('.preset-btn');
+        const customThoughtInput = document.getElementById('custom-thought');
+        const transformBtn = document.getElementById('transform-btn');
+        const reframeResult = document.getElementById('reframe-result');
+        const reframedText = document.getElementById('reframed-text');
+        const reframedExplanation = document.getElementById('reframed-explanation');
+
+        presetButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                customThoughtInput.value = btn.getAttribute('data-thought');
+            });
+        });
+
+        transformBtn.addEventListener('click', () => {
+            const userThought = customThoughtInput.value.trim();
+            if (!userThought) {
+                alert('Please select or type a thought first!');
+                return;
+            }
+
+            // Reframing algorithm & templates
+            let newText = "";
+            let explanation = "";
+
+            if (userThought.includes("further along")) {
+                newText = '"I am exactly where my journey has led me today. Progress is not linear, and I am learning at my own natural pace."';
+                explanation = "Replaces harsh timeline comparison with self-compassion and appreciation for your unique experience.";
+            } else if (userThought.includes("unfair")) {
+                newText = '"Life contains painful unfairness. I accept that this happened, and I choose to focus my energy on how I care for myself now."';
+                explanation = "Shifts focus away from futile anger towards realistic coping and personal empowerment.";
+            } else if (userThought.includes("mistake")) {
+                newText = '"I made a decision with the awareness I had at the time. Mistakes are evidence of trying, not proof of my worth."';
+                explanation = "Separates your inherent human worth from specific outcomes or errors.";
+            } else if (userThought.includes("people") || userThought.includes("act")) {
+                newText = '"I accept that I cannot control other people\'s behavior. I release expectations and focus on holding my own healthy boundaries."';
+                explanation = "Relieves the emotional exhaustion of trying to govern other people's actions.";
+            } else {
+                newText = `"I acknowledge the feeling: '${userThought}'. It is understandable to feel this way, but I release the need to fight this moment."`;
+                explanation = "Mindful acceptance validates emotions without letting them turn into toxic self-judgment.";
+            }
+
+            reframedText.textContent = newText;
+            reframedExplanation.textContent = explanation;
+            reframeResult.classList.remove('hidden');
+        });
+
+
+        /* ==========================================================================
+           7. 60-SECOND GUIDED BREATHING WIDGET
+           ========================================================================== */
+        let breathInterval = null;
+        let breathTimeLeft = 60;
+        let isBreathingActive = false;
+        let cyclesCompleted = 0;
+
+        const startBreathBtn = document.getElementById('start-breath-btn');
+        const resetBreathBtn = document.getElementById('reset-breath-btn');
+        const breathTimer = document.getElementById('breath-timer');
+        const breathLabel = document.getElementById('breath-label');
+        const breathPrompt = document.getElementById('breath-prompt');
+        const breathSphere = document.getElementById('breath-sphere');
+        const breathRing = document.getElementById('breath-ring');
+        const breathRingOuter = document.getElementById('breath-ring-outer');
+        const completedCyclesSpan = document.getElementById('completed-cycles');
+
+        function runBreathingCycle() {
+            // Rhythm: Inhale (4s), Hold (4s), Exhale (6s) -> 14s total cycle
+            let cycleSeconds = 0;
+
+            breathInterval = setInterval(() => {
+                if (breathTimeLeft <= 0) {
+                    clearInterval(breathInterval);
+                    isBreathingActive = false;
+                    breathLabel.textContent = "Done";
+                    breathPrompt.textContent = '"Session Complete. Notice the calm space within you."';
+                    startBreathBtn.textContent = "Start Again";
+                    breathSphere.className = "w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-tr from-blush-600 via-blush-500 to-blush-300 shadow-2xl flex flex-col items-center justify-center transform scale-100 transition-all duration-500";
+                    cyclesCompleted++;
+                    completedCyclesSpan.textContent = cyclesCompleted;
+                    return;
+                }
+
+                breathTimeLeft--;
+                breathTimer.textContent = breathTimeLeft;
+
+                cycleSeconds = (60 - breathTimeLeft) % 14;
+
+                if (cycleSeconds >= 0 && cycleSeconds < 4) {
+                    // INHALE phase (4 seconds)
+                    breathLabel.textContent = "Inhale";
+                    breathPrompt.textContent = '"Inhale deeply... Acknowledge what is present."';
+                    breathSphere.style.transform = "scale(1.35)";
+                    breathRing.style.transform = "scale(1.5)";
+                    breathRingOuter.style.transform = "scale(1.7)";
+                } else if (cycleSeconds >= 4 && cycleSeconds < 8) {
+                    // HOLD phase (4 seconds)
+                    breathLabel.textContent = "Hold";
+                    breathPrompt.textContent = '"Hold gently... Soften around the tension."';
+                    breathSphere.style.transform = "scale(1.35)";
+                } else {
+                    // EXHALE phase (6 seconds)
+                    breathLabel.textContent = "Exhale";
+                    breathPrompt.textContent = '"Exhale fully... Release all struggle and control."';
+                    breathSphere.style.transform = "scale(0.85)";
+                    breathRing.style.transform = "scale(0.9)";
+                    breathRingOuter.style.transform = "scale(0.8)";
+                }
+
+            }, 1000);
+        }
+
+        startBreathBtn.addEventListener('click', () => {
+            if (isBreathingActive) return;
+            
+            if (breathTimeLeft <= 0) {
+                breathTimeLeft = 60;
+                breathTimer.textContent = "60";
+            }
+
+            isBreathingActive = true;
+            startBreathBtn.textContent = "Breathing...";
+            runBreathingCycle();
+        });
+
+        resetBreathBtn.addEventListener('click', () => {
+            clearInterval(breathInterval);
+            isBreathingActive = false;
+            breathTimeLeft = 60;
+            breathTimer.textContent = "60";
+            breathLabel.textContent = "Ready";
+            breathPrompt.textContent = '"Press start to begin your 60-second release."';
+            startBreathBtn.textContent = "Begin Session";
+            breathSphere.style.transform = "scale(0.9)";
+            breathRing.style.transform = "scale(0.9)";
+            breathRingOuter.style.transform = "scale(0.75)";
+        });
+
+
+        /* ==========================================================================
+           8. INTERACTIVE WALL OF ACCEPTANCE
+           ========================================================================== */
+        const sampleNotes = [
+            {
+                text: "I accept that I am allowed to rest without earning it first. My worth isn't tied to constant productivity.",
+                author: "Elena R.",
+                color: "blush",
+                hearts: 24
+            },
+            {
+                text: "I am choosing to accept my body for everything it has carried me through, rather than criticizing it for not matching an ideal.",
+                author: "Marcus T.",
+                color: "coral",
+                hearts: 19
+            },
+            {
+                text: "I surrender the urge to fix my adult children's problems. I accept their autonomy and send them silent love.",
+                author: "Sarah B.",
+                color: "crimson",
+                hearts: 31
+            },
+            {
+                text: "I accept that grief has no expiration date. Missing them doesn't mean I am failing to move forward.",
+                author: "David K.",
+                color: "blush",
+                hearts: 42
+            },
+            {
+                text: "I release the shame of starting over in my career at 35. This chapter is mine to write with courage.",
+                author: "Aria M.",
+                color: "coral",
+                hearts: 17
+            }
+        ];
+
+        const wallGrid = document.getElementById('wall-cards-grid');
+        const acceptanceForm = document.getElementById('acceptance-form');
+
+        function renderWallNotes() {
+            wallGrid.innerHTML = '';
+            sampleNotes.forEach((note, index) => {
+                let bgStyle = "bg-white border-blush-200 text-blush-900";
+                let heartBadgeStyle = "bg-blush-100 text-blush-600 hover:bg-blush-200";
+
+                if (note.color === 'coral') {
+                    bgStyle = "bg-gradient-to-br from-blush-100 to-blush-200/60 border-blush-300 text-blush-900";
+                    heartBadgeStyle = "bg-white/80 text-blush-700 hover:bg-white";
+                } else if (note.color === 'crimson') {
+                    bgStyle = "bg-gradient-to-br from-blush-800 to-crimson-dark text-white border-blush-700 shadow-lg";
+                    heartBadgeStyle = "bg-white/20 text-rose-100 hover:bg-white/30";
+                }
+
+                const cardHTML = `
+                    <div class="p-6 rounded-3xl border shadow-md flex flex-col justify-between space-y-4 relative group ${bgStyle} transition-all duration-300 hover:-translate-y-1">
+                        <div class="space-y-3">
+                            <span class="text-xl">“</span>
+                            <p class="text-sm sm:text-base leading-relaxed font-serif italic">
+                                ${escapeHTML(note.text)}
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t ${note.color === 'crimson' ? 'border-white/20' : 'border-blush-200/80'} flex items-center justify-between text-xs">
+                            <span class="font-bold tracking-wide">${escapeHTML(note.author)}</span>
+                            
+                            <button onclick="likeNote(${index}, event)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-semibold transition-all ${heartBadgeStyle}">
+                                <span>♥</span>
+                                <span>${note.hearts}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                wallGrid.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+
+        window.likeNote = function(index, event) {
+            sampleNotes[index].hearts++;
+            
+            // Create Floating Heart animation burst
+            const heartBurst = document.createElement('div');
+            heartBurst.className = 'heart-burst text-rose-600 font-bold text-lg';
+            heartBurst.innerHTML = '♥ +1';
+            heartBurst.style.left = event.clientX + 'px';
+            heartBurst.style.top = event.clientY + 'px';
+            document.body.appendChild(heartBurst);
+
+            setTimeout(() => {
+                heartBurst.remove();
+            }, 1200);
+
+            renderWallNotes();
+        };
+
+        acceptanceForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = document.getElementById('note-text').value.trim();
+            const author = document.getElementById('note-author').value.trim();
+            const color = document.getElementById('note-color').value;
+
+            if (!text || !author) return;
+
+            sampleNotes.unshift({
+                text: text,
+                author: author,
+                color: color,
+                hearts: 1
+            });
+
+            acceptanceForm.reset();
+            renderWallNotes();
+        });
+
+        renderWallNotes();
+
+
+        /* ==========================================================================
+           9. RANDOM WISDOM & AFFIRMATION GENERATOR
+           ========================================================================== */
+        const wisdomQuotes = [
+            '"I give myself permission to be a work in progress. I accept where I am right now as the necessary starting line for where I am going."',
+            '"Acceptance doesn\'t mean you agree with what happened. It means you refuse to let what happened destroy your peace today."',
+            '"When you stop fighting with reality, your mind becomes quiet enough to see creative solutions."',
+            '"You are allowed to feel sad, uncertain, or tired. True acceptance begins by honoring your human vulnerability."',
+            '"The moment you accept what is, you regain the energy previously wasted on wishing things were different."'
+        ];
+
+        const affirmationText = document.getElementById('random-affirmation-text');
+        const newAffirmationBtn = document.getElementById('new-affirmation-btn');
+
+        newAffirmationBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * wisdomQuotes.length);
+            affirmationText.style.opacity = '0';
+            setTimeout(() => {
+                affirmationText.textContent = wisdomQuotes[randomIndex];
+                affirmationText.style.opacity = '1';
+            }, 200);
+        });
+
+    </script>
+</body>
+</html>
